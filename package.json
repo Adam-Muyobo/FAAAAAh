@@ -6,7 +6,7 @@
   "publisher": "local",
   "repository": {
     "type": "git",
-    "url": "https://github.com/REPLACE_ME/faaaah-vscode.git"
+    "url": "https://github.com/Adam-Muyobo/FAAAAAh.git"
   },
   "icon": "images/icon.png",
   "engines": {
