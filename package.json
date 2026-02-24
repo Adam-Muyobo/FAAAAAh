@@ -1,0 +1,184 @@
+{
+  "name": "faaaah",
+  "displayName": "FAAAAh",
+  "description": "Plays the famous FAAAAAAh meme sound when tasks/tests fail (and optionally when exceptions are detected).",
+  "version": "0.0.1",
+  "publisher": "local",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/REPLACE_ME/faaaah-vscode.git"
+  },
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:faaaah.play",
+    "onCommand:faaaah.toggle",
+    "onCommand:faaaah.on",
+    "onCommand:faaaah.off"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "faaaah.play",
+        "title": "FAAAAh: Play Sound"
+      },
+      {
+        "command": "faaaah.toggle",
+        "title": "FAAAAh: Toggle Enabled"
+      },
+      {
+        "command": "faaaah.on",
+        "title": "FAAAAh: On"
+      },
+      {
+        "command": "faaaah.off",
+        "title": "FAAAAh: Off"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "faaaah",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "Command to run."
+          },
+          "args": {
+            "type": "array",
+            "description": "Arguments to pass to the command.",
+            "items": { "type": "string" }
+          },
+          "cwd": {
+            "type": "string",
+            "description": "Working directory."
+          },
+          "env": {
+            "type": "object",
+            "description": "Extra environment variables.",
+            "additionalProperties": { "type": "string" }
+          },
+          "useShell": {
+            "type": "boolean",
+            "description": "Run via shell for PATH/cmd scripts (recommended on Windows).",
+            "default": true
+          },
+          "exceptionProfiles": {
+            "type": "array",
+            "description": "Override enabled exception profiles for this task.",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    ],
+    "configuration": {
+      "title": "FAAAAh",
+      "properties": {
+        "faaaah.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable the FAAAAAh sound."
+        },
+        "faaaah.cooldownMs": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 0,
+          "description": "Minimum time between plays (prevents spam)."
+        },
+        "faaaah.soundPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional override path to a .wav file. If empty, uses the bundled media/faaaah.wav."
+        },
+        "faaaah.playOnTaskFailure": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play when a VS Code task finishes with a non-zero exit code."
+        },
+        "faaaah.taskFailureScope": {
+          "type": "string",
+          "enum": ["testBuild", "all"],
+          "default": "testBuild",
+          "description": "Which tasks can trigger on non-zero exit. 'testBuild' only triggers for tasks in the Test/Build groups."
+        },
+        "faaaah.taskNameRegex": {
+          "type": "string",
+          "default": "",
+          "description": "Optional regex filter applied to the task name."
+        },
+        "faaaah.playOnExceptionOutput": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play when exception/stacktrace output is detected (only for 'faaaah' wrapper tasks)."
+        },
+        "faaaah.playOnDiagnosticsError": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play when VS Code diagnostics report new errors (syntax/type errors in Problems)."
+        },
+        "faaaah.diagnosticsScope": {
+          "type": "string",
+          "enum": ["activeFile", "workspace"],
+          "default": "activeFile",
+          "description": "Which files can trigger diagnostics-based playback."
+        },
+        "faaaah.diagnosticsTrigger": {
+          "type": "string",
+          "enum": ["change", "save"],
+          "default": "change",
+          "description": "When to evaluate diagnostics (on change while typing, or only on save)."
+        },
+        "faaaah.diagnosticsLanguages": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["python", "javascript", "typescript", "java", "csharp", "cpp", "dart"],
+          "description": "Language IDs to allow for diagnostics-based playback."
+        },
+        "faaaah.enabledExceptionProfiles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "common",
+            "java",
+            "springboot",
+            "javascript",
+            "python",
+            "csharp",
+            "cpp",
+            "flutter"
+          ],
+          "description": "Exception profile sets to use for detection (wrapper tasks only)."
+        },
+        "faaaah.customExceptionRegexes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Additional regex patterns (as strings) used for exception detection (wrapper tasks only)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "package": "vsce package",
+    "lint": "eslint .",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.85.0",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.3",
+    "@vscode/vsce": "^3.2.0"
+  }
+}
