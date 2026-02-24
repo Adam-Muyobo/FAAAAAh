@@ -6,6 +6,28 @@
 
 Plays the famous `FAAAAAAAh` meme sound when tasks fail (non-zero exit code) and, optionally, when exceptions are detected in output.
 
+## Installation
+
+### Run locally (development)
+
+Prereqs: VS Code `^1.85.0`, Node.js (LTS recommended).
+
+```bash
+npm ci
+npm run compile
+```
+
+Then open this folder in VS Code and press `F5` to launch an Extension Development Host.
+
+### Install as a VSIX (local install)
+
+```bash
+npm ci
+npm run package
+```
+
+This creates a `.vsix` in the project root. In VS Code: Extensions view -> `...` menu -> `Install from VSIX...` -> select the generated file, then reload.
+
 ## Quick Start
 
 - Command Palette: `FAAAAh: Play Sound`
